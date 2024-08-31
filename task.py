@@ -147,8 +147,9 @@ def main():
             claim_tasks(authorization, username)
             claim_tasks_whell(authorization)
         print(f"{Fore.LIGHTWHITE_EX}Все задачи успешно выполнены!")
+        
         break
-
+        # Если нужен сон на 24 часа, то вместо break написать это: time.sleep(86400)
 
 if __name__ == "__main__":
     main()
