@@ -72,7 +72,7 @@ def claim_wheel(authorization, username):
                 resultw = json_responsew.get("result", {})
                 reward_code = resultw.get("reward", '')
                 reward = reward_mapping.get(reward_code, reward_code)
-                print(f'{Fore.LIGHTYELLOW_EX}Выиграл: {reward}')
+                print(f'{Fore.LIGHTYELLOW_EX}Выиграл: {Fore.LIGHTWHITE_EX}{reward}')
 
 
                 response = requests.post(url_get_tasks, headers=headers)
