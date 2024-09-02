@@ -46,10 +46,10 @@ def claim_wheel(authorization, username):
     reward_mapping = {
         'tc4': '4 TON',
         'c1000': '1 000 AP',
-        't1': '1 ticket',
+        't1': '1 билет',
         'nt1': '1 NOT',
         'nt5': '5 NOT',
-        't3': '3 ticket',
+        't3': '3 билета',
         'tc1': '0.01 TON',
         'c10000': '10 000 AP'
     }
@@ -64,16 +64,22 @@ def claim_wheel(authorization, username):
             if tickets > 0:
                 print(f"{Fore.LIGHTYELLOW_EX}Запуск колеса\n")
             else:
-                print(f"{Fore.LIGHTRED_EX}Нету билетов\n")
+                print(f"{Fore.LIGHTRED_EX}Нет билетов\n")
 
             while tickets > 0:
                 responsew = requests.post('https://api.agent301.org/wheel/spin', headers=headers)
-                json_responsew = responsew.json()
-                resultw = json_responsew.get("result", {})
-                reward_code = resultw.get("reward", '')
-                reward = reward_mapping.get(reward_code, reward_code)
-                print(f'{Fore.LIGHTYELLOW_EX}Выиграл: {Fore.LIGHTWHITE_EX}{reward}')
 
+
+                try:
+                    json_responsew = responsew.json()
+                    resultw = json_responsew.get("result", {})
+                    reward_code = resultw.get("reward", '')
+                    reward = reward_mapping.get(reward_code, reward_code)
+                    print(f'{Fore.LIGHTYELLOW_EX}Выиграл: {Fore.LIGHTWHITE_EX}{reward}')
+                except json.JSONDecodeError:
+                    print(f"{Fore.LIGHTRED_EX}Ошибка: Ответ сервера не является допустимым JSON.")
+                    print(f"{Fore.LIGHTRED_EX}Ответ сервера: {responsew.text}")
+                    break
 
                 response = requests.post(url_get_tasks, headers=headers)
                 if response.status_code == 200:
@@ -83,16 +89,17 @@ def claim_wheel(authorization, username):
                         tickets = result.get("tickets", 0)
                     else:
                         print(
-                            f"{Fore.LIGHTRED_EX}Не удалось получить количество тикетов. Пожалуйста, повторите попытку.")
+                            f"{Fore.LIGHTRED_EX}Не удалось получить количество билетов. Пожалуйста, повторите попытку.")
                         break
                 else:
                     print(
-                        f"{Fore.LIGHTRED_EX}Ошибка при получении обновленного количества тикетов: {response.status_code}")
+                        f"{Fore.LIGHTRED_EX}Ошибка при получении обновленного количества билетов: {response.status_code}")
                     break
         else:
             print(f"{Fore.LIGHTRED_EX}Не удалось получить задачи. Пожалуйста, повторите попытку.")
     else:
         print(f"{Fore.LIGHTRED_EX}Ошибка: {response.status_code}")
+
 
 
 def main():
