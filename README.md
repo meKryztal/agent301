@@ -1,3 +1,9 @@
+<div align="right">
+  <a href="https://github.com/meKryztal">
+    <img src="https://github.com/user-attachments/assets/c381e8c0-e56a-4134-b333-4ec0dffab514" alt="donate" width="150">
+  </a>
+</div>
+
 # Автофарм Agent 301
 
 -  Можно загрузить сотни акков
